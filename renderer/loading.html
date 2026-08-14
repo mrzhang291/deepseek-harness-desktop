@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>DeepSeek Harness</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 26px;
+      background: #0b0f17;
+      color: #e6edf7;
+      font-family: "Segoe UI", "Microsoft YaHei", system-ui, sans-serif;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    .logo { width: 84px; height: 84px; }
+    .spinner {
+      width: 46px; height: 46px;
+      border: 4px solid #233047;
+      border-top-color: #4d9fff;
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .text { font-size: 15px; color: #8b98ad; letter-spacing: 0.5px; }
+    .brand { font-size: 20px; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <img class="logo" src="../assets/icon.png" alt="DSH" />
+  <div class="brand">DeepSeek Harness</div>
+  <div class="spinner"></div>
+  <div class="text">正在启动后端服务…</div>
+</body>
+</html>

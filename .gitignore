@@ -1,0 +1,10 @@
+# 依赖与构建产物（npm install 后重新生成）
+node_modules/
+release/
+.electron-cache/
+
+# 打包时自带的 Node 运行时（体积大，README 有重建说明）
+node-runtime/
+
+# 本地日志
+*.log

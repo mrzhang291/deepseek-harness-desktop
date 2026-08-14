@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; img-src 'self' data:;" />
+  <title>DeepSeek Harness</title>
+  <link rel="stylesheet" href="welcome.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">D</div>
+      <div>
+        <h1>DeepSeek Harness</h1>
+        <p class="sub" id="sub-title">桌面版 · 启动 / 迁移 / 常驻</p>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button class="ghost" id="btn-data-dir" title="打开数据目录">数据目录</button>
+      <button class="ghost" id="btn-logs" title="打开日志目录">日志</button>
+      <button class="ghost" id="btn-minimize" title="最小化">—</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- 服务状态卡 -->
+    <section class="card" id="service-card">
+      <div class="card-head">
+        <h2>后端服务</h2>
+        <span class="pill" id="state-pill">离线</span>
+      </div>
+      <div class="service-row">
+        <div class="service-info">
+          <div class="kv"><span>后端</span><b id="backend-kind">…</b></div>
+          <div class="kv"><span>bin.js</span><code id="backend-bin">…</code></div>
+          <div class="kv"><span>地址</span><b id="service-url">尚未启动</b></div>
+          <div class="kv"><span>数据目录</span><code id="home-path">…</code></div>
+        </div>
+        <div class="service-buttons">
+          <button class="primary" id="btn-start">启动服务</button>
+          <button class="primary" id="btn-open-app" disabled>打开 DeepSeek Harness</button>
+          <button class="ghost" id="btn-restart" disabled>重启</button>
+        </div>
+      </div>
+      <div class="notice" id="service-notice" hidden></div>
+    </section>
+
+    <!-- 迁移工作台 -->
+    <section class="card">
+      <div class="card-head">
+        <h2 id="migrate-title">会话迁移</h2>
+        <span class="pill ok" id="migrate-state-pill" hidden>已迁移</span>
+      </div>
+      <p class="hint">
+        把网页版实例（<code>~/.dsh</code>）里的项目会话、设置与凭据复制到桌面版数据目录。
+        桌面版与网页版数据完全隔离；源数据不会被删除。重复迁移幂等，源更新会自动增量刷新。
+        同步期间后端会短暂重启（进行中的对话会被中断）。
+      </p>
+
+      <div class="migrate-layout">
+        <div class="migrate-left">
+          <div id="onboarding-block">
+            <label class="field-label">首次配置</label>
+            <div class="check-head">
+              <label><input type="checkbox" id="chk-migrate-on" checked /> 同步网页版会话数据（推荐）</label>
+            </div>
+          </div>
+
+          <label class="field-label">迁移源实例</label>
+          <div id="source-list" class="source-list"><span class="muted">扫描中…</span></div>
+
+          <label class="field-label">迁移内容</label>
+          <div class="check-head">
+            <label><input type="checkbox" id="chk-all-projects" checked /> 全部项目会话</label>
+          </div>
+          <div id="project-list" class="project-list"><span class="muted">—</span></div>
+
+          <label class="field-label">实例配置</label>
+          <div class="extras">
+            <label><input type="checkbox" id="chk-settings" checked /> 设置 settings.yaml</label>
+            <label><input type="checkbox" id="chk-credentials" checked /> API 凭据 .credentials.yaml</label>
+            <label><input type="checkbox" id="chk-anon" checked /> 匿名身份标识</label>
+            <label><input type="checkbox" id="chk-profiles" /> 插件 profiles（体积较大）</label>
+            <label><input type="checkbox" id="chk-storages" checked /> storages（会话命名/排序，推荐）</label>
+          </div>
+
+          <label class="field-label">已有目标冲突时</label>
+          <div class="extras">
+            <label><input type="radio" name="policy" value="skip" checked /> 跳过（推荐，可重复执行）</label>
+            <label><input type="radio" name="policy" value="overwrite" /> 覆盖（先备份旧目标）</label>
+          </div>
+        </div>
+
+        <div class="migrate-right">
+          <div class="migrate-actions">
+            <button class="primary" id="btn-migrate">开始迁移</button>
+            <span id="migrate-summary" class="muted"></span>
+          </div>
+          <div class="progress" id="progress-wrap" hidden>
+            <div class="progress-bar" id="progress-bar"></div>
+          </div>
+          <div class="log" id="migrate-log"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="statusbar">
+    <span id="footer-version"></span>
+    <span id="footer-note"></span>
+  </footer>
+
+  <script src="welcome.js"></script>
+</body>
+</html>
